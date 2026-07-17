@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ランダム抽選アプリ</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>🎲 ランダム抽選アプリ</h1>
+
+    <div class="setting">
+
+        <div class="input-box">
+            <label>最小値</label>
+            <input type="number" id="min" value="1">
+        </div>
+
+        <div class="input-box">
+            <label>最大値</label>
+            <input type="number" id="max" value="100">
+        </div>
+
+    </div>
+
+    <div class="buttons">
+
+        <button id="drawBtn">
+            抽選
+        </button>
+
+        <button id="resetBtn">
+            リセット
+        </button>
+
+    </div>
+
+    <div class="result-area">
+
+        <h2>今回の数字</h2>
+
+        <div id="result">
+            -
+        </div>
+
+    </div>
+
+    <div class="remain">
+
+        残り
+        <span id="remain">0</span>
+
+    </div>
+
+    <div class="history">
+
+        <h2>今まで出た数字</h2>
+
+        <ul id="historyList">
+
+        </ul>
+
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
