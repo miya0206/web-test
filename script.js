@@ -1,3 +1,6 @@
+// =========================
+// 要素取得
+// =========================
 const minInput = document.getElementById("min");
 const maxInput = document.getElementById("max");
 
@@ -11,9 +14,9 @@ const historyList = document.getElementById("historyList");
 // 抽選済みの数字
 let drawnNumbers = [];
 
-// ----------------------------
+// =========================
 // データ保存
-// ----------------------------
+// =========================
 function saveData() {
 
     const data = {
@@ -26,9 +29,9 @@ function saveData() {
 
 }
 
-// ----------------------------
-// データ読み込み
-// ----------------------------
+// =========================
+// データ読込
+// =========================
 function loadData() {
 
     const saved = localStorage.getItem("lotteryData");
@@ -42,7 +45,6 @@ function loadData() {
 
     minInput.value = data.min;
     maxInput.value = data.max;
-
     drawnNumbers = data.drawnNumbers || [];
 
     if (drawnNumbers.length > 0) {
@@ -56,9 +58,9 @@ function loadData() {
 
 }
 
-// ----------------------------
+// =========================
 // 残り件数更新
-// ----------------------------
+// =========================
 function updateRemain() {
 
     const min = Number(minInput.value);
@@ -70,9 +72,9 @@ function updateRemain() {
 
 }
 
-// ----------------------------
+// =========================
 // 履歴更新
-// ----------------------------
+// =========================
 function updateHistory() {
 
     historyList.innerHTML = "";
@@ -88,44 +90,36 @@ function updateHistory() {
 
 }
 
-// ----------------------------
+// =========================
 // 抽選
-// ----------------------------
+// =========================
 function drawNumber() {
 
     const min = Number(minInput.value);
     const max = Number(maxInput.value);
 
     if (isNaN(min) || isNaN(max)) {
-
         alert("数字を入力してください。");
         return;
-
     }
 
     if (max < min) {
-
         alert("最大値は最小値以上にしてください。");
         return;
-
     }
 
     const total = max - min + 1;
 
     if (drawnNumbers.length >= total) {
-
         result.textContent = "終了";
         alert("すべての数字を抽選しました！");
         return;
-
     }
 
     let random;
 
     do {
-
         random = Math.floor(Math.random() * total) + min;
-
     } while (drawnNumbers.includes(random));
 
     drawnNumbers.push(random);
@@ -138,33 +132,49 @@ function drawNumber() {
 
 }
 
-// ----------------------------
+// =========================
 // リセット
-// ----------------------------
+// =========================
 function resetLottery() {
+
+    if (!confirm("抽選結果をリセットしますか？")) {
+        return;
+    }
 
     drawnNumbers = [];
 
     result.textContent = "-";
 
-    historyList.innerHTML = "";
-
+    updateHistory();
     updateRemain();
-
     saveData();
 
 }
 
-// ----------------------------
+// =========================
 // イベント
-// ----------------------------
+// =========================
 drawBtn.addEventListener("click", drawNumber);
 resetBtn.addEventListener("click", resetLottery);
 
-minInput.addEventListener("change", resetLottery);
-maxInput.addEventListener("change", resetLottery);
+// 最小値・最大値変更時
+minInput.addEventListener("change", () => {
+    drawnNumbers = [];
+    result.textContent = "-";
+    updateHistory();
+    updateRemain();
+    saveData();
+});
 
-// ----------------------------
+maxInput.addEventListener("change", () => {
+    drawnNumbers = [];
+    result.textContent = "-";
+    updateHistory();
+    updateRemain();
+    saveData();
+});
+
+// =========================
 // 起動時
-// ----------------------------
+// =========================
 loadData();
